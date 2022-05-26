@@ -1,0 +1,7 @@
+.Ball-1 {
+    color: red;
+    fill: currentColor;
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+}

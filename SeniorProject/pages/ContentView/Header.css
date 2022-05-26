@@ -1,0 +1,18 @@
+html,
+.header{
+   display: flex;
+   justify-content: space-between;
+   align-items: top;
+   border-bottom: 1px solid red;
+}
+
+.header__logo{
+    height: 30px;
+/*     width: 100px;
+ */    object-fit: contain;
+}
+
+.header__icon{
+    padding: 10px;
+
+}

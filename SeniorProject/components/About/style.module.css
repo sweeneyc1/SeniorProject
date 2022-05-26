@@ -1,0 +1,158 @@
+/* * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+} */
+
+/* body {
+  text-align: center;
+  margin: 10px;
+} */
+
+#Maroon-Ball:hover {
+  animation-name: fillCycle;
+  animation-duration: 10s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+#Yellow-Ball:hover {
+  animation-name: fillCycle;
+  animation-duration: 10s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+#Red-Ball:hover {
+  animation-name: fillCycle;
+  animation-duration: 10s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+#Teal-Ball:hover {
+  animation-name: fillCycle;
+  animation-duration: 10s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+#Baby-Blue-Ball:hover {
+  animation-name: fillCycle;
+  animation-duration: 10s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+#Orange-Semi:hover {
+    animation-name: fillCycle;
+    animation-duration: 10s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+  }
+
+
+  #Red-Ball{
+      position: relative;
+      margin: 50px auto;
+      -webkit-transform-style: preserve-3d;
+                transform-style:preserve-3d ;
+      animation: spin 3s forwards;
+      transform-origin: center;
+      transform-box: fill-box;
+  }
+
+  #Yellow-Ball{
+    position: relative;
+    margin: 50px auto;
+    -webkit-transform-style: preserve-3d;
+              transform-style:preserve-3d ;
+    animation: spin 3s forwards;
+    transform-origin: center;
+    transform-box: fill-box;
+}
+
+#Baby-Blue-Ball{
+    position: relative;
+    margin: 50px auto;
+    -webkit-transform-style: preserve-3d;
+              transform-style:preserve-3d ;
+    animation: spin 3s forwards;
+    transform-origin: center;
+    transform-box: fill-box;
+}
+
+
+#Teal-Ball{
+    position: relative;
+    margin: 50px auto;
+    -webkit-transform-style: preserve-3d;
+              transform-style:preserve-3d ;
+    animation: spin 3s forwards;
+    transform-origin: center;
+    transform-box: fill-box;
+}
+
+
+#Orange-Semi-Ball{
+    position: relative;
+    margin: 50px auto;
+    -webkit-transform-style: preserve-3d;
+              transform-style:preserve-3d ;
+    animation: spin 3s forwards;
+    transform-origin: center;
+    transform-box: fill-box;
+}
+  @keyframes spin {
+      0%{
+        transform: rotateX(0);
+      }
+      100%{
+        transform: rotateX(180deg);
+      }
+  }
+
+
+
+#Ball-1 {
+  animation: up 2s ease-in-out infinite alternate;
+}
+#Ball-2 {
+  animation: up 2s ease-in-out infinite alternate;
+}
+#Ball-3 {
+  animation: up 2s ease-in-out infinite alternate;
+}
+#Ball-4 {
+  animation: up 2s ease-in-out infinite alternate;
+}
+#Ball-5 {
+  animation: up 2s ease-in-out infinite alternate;
+}
+
+@keyframes up {
+  from {
+    transform: translateY(0%);
+  }
+  to {
+    transform: translateY(7.7%);
+  }
+}
+
+@keyframes fillCycle {
+  0% {
+    fill: #ee6055;
+  }
+  25% {
+    fill: #60d394;
+  }
+  50% {
+    fill: #aaf683;
+  }
+  75% {
+    fill: #ffd97d;
+  }
+  100% {
+    fill: #ff9b85;
+  }
+}

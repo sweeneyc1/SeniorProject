@@ -1,0 +1,106 @@
+import React, { useState } from 'react'
+import { gql, useMutation, } from "@apollo/client";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { projectStorage } from "../../firebase/firebase.js"
+import { onAuthStateChanged } from "firebase/auth";
+import { projectAuth } from '../../firebase/firebase'
+import { v4 as uuidv4 } from "uuid";
+import router from 'next/router';
+
+const ADD_PROFILE_IMAGE = gql`
+mutation Mutation($userId: String, $profileImage: String) {
+    addProfileImage(userID: $userId, profileImage: $profileImage)
+  }
+`;
+export default function Settings() {
+
+    const [addProfileImage, { data, loading, error }] = useMutation(ADD_PROFILE_IMAGE);
+    if (error) return `Submission error! ${error.message}`;
+
+    const [uid, setUid] = useState("");
+    const auth = projectAuth;
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            // User is signed in, see docs for a list of available properties
+            // https://firebase.google.com/docs/reference/js/firebase.User
+            const uid = user.uid;
+            setUid(uid)
+            // ...
+        } else {
+            // User is signed out
+            // ...
+        }
+    });
+
+    const storage = projectStorage;
+    const metadata = {
+        contentType: 'image/jpeg'
+    };
+    const [file, setFile] = useState(null);
+    const [url, setUrl] = useState("");
+
+    function handleChange(e) {
+        setFile(e.target.files[0]);
+    }
+
+    function handleUpload() {
+        const storageRef = ref(storage, `images/${uuidv4()}_${file.name}`);
+        const uploadTask = uploadBytesResumable(storageRef, file, metadata);
+        uploadTask.on('state_changed',
+            (snapshot) => {
+                // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                console.log('Upload is ' + progress + '% done');
+                switch (snapshot.state) {
+                    case 'paused':
+                        console.log('Upload is paused');
+                        break;
+                    case 'running':
+                        console.log('Upload is running');
+                        break;
+                }
+            }, (error) => {
+                // A full list of error codes is available at
+                // https://firebase.google.com/docs/storage/web/handle-errors
+                switch (error.code) {
+                    case 'storage/unauthorized':
+                        // User doesn't have permission to access the object
+                        break;
+                    case 'storage/canceled':
+                        // User canceled the upload
+                        break;
+
+                    // ...
+
+                    case 'storage/unknown':
+                        // Unknown error occurred, inspect error.serverResponse
+                        break;
+                }
+            },
+            () => {
+                // Upload completed successfully, now we can get the download URL
+                getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                    console.log('File available at', downloadURL);
+                    setUrl(downloadURL)
+                    addProfileImage({ variables: { userId: uid, profileImage: downloadURL } });
+                })
+            });
+    }
+
+    return (
+        <div>
+            <form
+                onSubmit={e => {
+                    e.preventDefault();
+                    handleUpload();
+                    router.push("/user/profiles");
+                }}
+            >
+                <input type="file" accept="image/*" onChange={handleChange} />
+                <button disabled={!file}>Add Profile Image</button>
+
+            </form>
+            {/* <img src={url} alt="" /> */}
+        </div>
+    );
+}
